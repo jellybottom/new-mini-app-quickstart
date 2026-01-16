@@ -17,60 +17,21 @@ interface AuthResponse {
 
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout[]>([]);
 
-  // Init mini‑app frame
   useEffect(() => {
     if (!isFrameReady) setFrameReady();
   }, [isFrameReady, setFrameReady]);
 
-  // Clean up pending timers on unmount
   useEffect(() => () => timeoutRef.current.forEach(clearTimeout), []);
 
   const { data: authData, isLoading: isAuthLoading, error: authError } =
     useQuickAuth<AuthResponse>("/api/auth", { method: "GET" });
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return email && emailRegex.test(email);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (isAuthLoading) {
-      setError("Please wait while we verify your identity...");
-      return;
-    }
-
-    if (authError || !(authData?.success)) {
-      setError("Please authenticate to join the waitlist");
-      return;
-    }
-
-    if (!email) {
-      setError("Please enter your email address");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
-
-    console.log("Valid email submitted:", email);
-    console.log("User authenticated:", authData?.user);
-
-    await router.push("/success");
-  };
-
   const spawnHearts = () => {
-    if (hearts.length > 50) return; // prevent overload
+    if (hearts.length > 50) return;
     const newHearts = Array.from({ length: 15 }).map((_, i) => ({
       id: Date.now() + i,
       left: Math.random() * 100,
@@ -84,14 +45,8 @@ export default function Home() {
   };
 
   return (
-    <div className={styles.container}>
-      <button
-        className={styles.closeButton}
-        type="button"
-        onClick={() => {/* close mini‑app logic */}}
-      >
-        ✕
-      </button>
+    <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
+      <button className={styles.closeButton} type="button"> ✕ </button>
 
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
@@ -106,8 +61,7 @@ export default function Home() {
             I wish you all the best!
           </p>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            {/* hearts animation */}
+          <div className={styles.form}>
             {hearts.map((heart) => (
               <div
                 key={heart.id}
@@ -129,23 +83,16 @@ export default function Home() {
               type="button"
               onClick={spawnHearts}
               className={styles.joinButton}
-              style={{ width: "100%" }}
+              style={{ width: "100%", cursor: "pointer" }}
             >
               BECOME AWESOME
             </button>
-
-          </form>
+          </div>
 
           <style jsx global>{`
             @keyframes floatUp {
-              0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-              }
-              100% {
-                transform: translateY(-100vh) scale(1.5);
-                opacity: 0;
-              }
+              0% { transform: translateY(0) scale(1); opacity: 1; }
+              100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
             }
           `}</style>
         </div>
