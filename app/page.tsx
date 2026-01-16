@@ -94,7 +94,7 @@ export default function Home() {
           <h1 className={styles.title}>Join {minikitConfig.miniapp.name.toUpperCase()}</h1>
           
           <p className={styles.subtitle}>
-             Hey {context?.user?.displayName || "there"}, Get early access and be the first to experience the future of<br />
+             Hey {context?.user?.displayName || "there"}, You look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ I wish you all the best!<br />
             crypto marketing strategy.
           </p>
 
