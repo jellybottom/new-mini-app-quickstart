@@ -34,6 +34,13 @@ export default function Home() {
       
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
+	  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+  <img 
+    src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
+    alt="Based Pepe" 
+    style={{ width: '150px', height: 'auto', borderRadius: '15px' }} 
+  />
+</div> 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
              Hey {context?.user?.displayName || "there"}, You look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
