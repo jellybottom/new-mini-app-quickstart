@@ -9,3 +9,8 @@ Just catching some **Based Vibes** while exploring the ecosystem.
 - ✨ Just having fun and building the future.
 
 *Built with passion, based on Base.*
+
+### 🚀 Quick Links
+- **Live Demo:** [the-awesome-and-based.vercel.app](https://the-awesome-and-based.vercel.app)
+- **Open in Warpcast:** [Launch Mini App](https://farcaster.xyz/miniapps/pI_AOMKHHa_n/the-awesome-and-based)
+- **Network:** Base Mainnet 🔵
