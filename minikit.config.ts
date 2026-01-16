@@ -16,10 +16,10 @@ export const minikitConfig = {
   miniapp: {
     version: "1",
     name: "The Awesome And Based", 
-    subtitle: "you're the based af", 
+    subtitle: "you are the based af", 
     description: "lfg",
-    screenshotUrls: "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
-    iconUrl: `${ROOT_URL}/blue-icon.png`,
+    screenshotUrls: [`${ROOT_URL}/screenshot-portrait.png`],
+    iconUrl: "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
     splashImageUrl: "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
     splashBackgroundColor: "#000000",
     homeUrl: ROOT_URL,
