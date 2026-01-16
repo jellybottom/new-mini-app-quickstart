@@ -40,7 +40,7 @@ export default function Home() {
           </p>
           <div className={styles.form}>
             <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
-              BECOME AWESOME
+              FEEL THE VIBE
             </button>
           </div>
         </div>
