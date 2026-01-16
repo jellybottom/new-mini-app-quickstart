@@ -24,7 +24,7 @@ export const minikitConfig = {
     splashBackgroundColor: "#000000",
     homeUrl: ROOT_URL,
     webhookUrl: `${ROOT_URL}/api/webhook`,
-    primaryCategory: "meme",
+    primaryCategory: "entertainment",
     tags: ["meme", "funny", "based", "love"],
     heroImageUrl: "https://the-awesome-and-based.vercel.app/basedpepe.jpg", 
     tagline: "",
