@@ -26,7 +26,7 @@ export const minikitConfig = {
     webhookUrl: `${ROOT_URL}/api/webhook`,
     primaryCategory: "social",
     tags: ["marketing", "ads", "quickstart", "waitlist"],
-    heroImageUrl: `${ROOT_URL}/basedpepe.jpg`, 
+    heroImageUrl: "https://the-awesome-and-based.vercel.app/basedpepe.jpg", 
     tagline: "",
     ogTitle: "",
     ogDescription: "",
