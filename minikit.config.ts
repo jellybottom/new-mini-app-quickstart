@@ -1,5 +1,5 @@
 const ROOT_URL =
-  https://the-awesome-and-based.vercel.app);
+  'https://the-awesome-and-based.vercel.app';
 
 /**
  * MiniApp configuration object. Must follow the Farcaster MiniApp specification.
