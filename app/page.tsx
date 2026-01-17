@@ -36,7 +36,7 @@ export default function Home() {
   const { user: _authUser, authenticate } = useAuthenticate() as any;
   const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
   
-  // @ts-expect-error: displayName optional in context
+
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
