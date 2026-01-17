@@ -9,7 +9,7 @@ import { base } from 'viem/chains';
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
   // @ts-expect-error: Address exists in MiniKit context but not in default type
-  const userAddress = context?.user?.address as `0x${string}` | undefined;
+  const userAddress = (context?.user?.address || context?.user?.walletAddress || context?.walletAddress) as `0x${string}` | undefined;
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
 
@@ -32,26 +32,33 @@ export default function Home() {
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
 
-    {userAddress && (
     <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      padding: '8px', 
-      background: 'rgba(0, 0, 0, 0.2)', 
-      backdropFilter: 'blur(10px)',
-      position: 'absolute',
-      top: 0,
-      width: '100%',
-      zIndex: 1000,
-      borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-    }}>
+    position: 'absolute', // Используем absolute, так как контейнер relative
+    top: 0, 
+    left: 0, 
+    right: 0, 
+    height: '60px', 
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+    backdropFilter: 'blur(10px)',
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    zIndex: 100, // Чтобы была поверх сердечек
+    borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+  }}>
+    {userAddress ? (
       <Identity address={userAddress} chain={base}>
         <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
         <Name style={{ color: 'white', fontSize: '14px' }} />
         <Badge />
       </Identity>
-    </div>
-  )}
+    ) : (
+      <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px' }}>Connecting to Base...</span>
+    )}
+  </div>
+
+  <div style={{ height: '60px' }}></div>
+
       {hearts.map((heart) => (
         <div key={heart.id} style={{ position: 'absolute', bottom: '0', left: `${heart.left}%`, fontSize: '2rem', pointerEvents: 'none', zIndex: 100, animation: 'floatUp 3s ease-out forwards' }}>
           ❤️
