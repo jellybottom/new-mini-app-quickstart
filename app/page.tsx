@@ -7,6 +7,7 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+import Image from 'next/image'; 
 
 
 interface ExtendedUser {
@@ -27,14 +28,14 @@ interface MiniKitReturn {
 }
 
 export default function Home() {
-  // @ts-ignore: extended types
+  // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
   const { isFrameReady, setFrameReady, context } = miniKit;
   
-  const { user: authUser, authenticate } = useAuthenticate();
-  const { address: userAddress } = useAccount(); 
+  const { user: _authUser, authenticate } = useAuthenticate(); 
+  const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
   
-  // @ts-ignore: displayName optional
+  // @ts-expect-error: displayName optional in context
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
@@ -113,7 +114,15 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <img src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" alt="Based Pepe" style={{ width: '150px', height: 'auto', borderRadius: '15px' }} />
+            
+            <Image 
+              src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
+              alt="Based Pepe" 
+              width={150}
+              height={150} 
+              style={{ borderRadius: '15px' }}
+              priority 
+            />
           </div> 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
