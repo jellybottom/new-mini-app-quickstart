@@ -8,6 +8,7 @@ import { base } from 'viem/chains';
 
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
+  // @ts-ignore
   const userAddress = context?.user?.address as `0x${string}` | undefined;
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
