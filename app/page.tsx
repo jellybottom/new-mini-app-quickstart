@@ -115,13 +115,14 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img 
               src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
               alt="Based Pepe" 
               style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
             />
           </div>
-          
+
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
             Hey {displayName}, You look based! ❤️ <br /> I wish you all the best!
