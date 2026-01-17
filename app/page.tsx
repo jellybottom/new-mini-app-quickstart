@@ -7,7 +7,6 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
-import Image from 'next/image'; 
 
 
 interface ExtendedUser {
@@ -115,7 +114,7 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            /* eslint-disable-next-line @next/next/no-img-element */
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
               alt="Based Pepe" 
