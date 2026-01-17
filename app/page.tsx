@@ -3,10 +3,14 @@ import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
+import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
+import { base } from 'viem/chains';
 
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
+  const userAddress = (context?.user as any)?.address as `0x${string}` | undefined;
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
+
 
   useEffect(() => {
     if (!isFrameReady) setFrameReady();
@@ -26,6 +30,27 @@ export default function Home() {
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
+
+    {userAddress && (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      padding: '8px', 
+      background: 'rgba(0, 0, 0, 0.2)', 
+      backdropFilter: 'blur(10px)',
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      zIndex: 1000,
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+    }}>
+      <Identity address={userAddress} chain={base}>
+        <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
+        <Name style={{ color: 'white', fontSize: '14px' }} />
+        <Badge />
+      </Identity>
+    </div>
+  )}
       {hearts.map((heart) => (
         <div key={heart.id} style={{ position: 'absolute', bottom: '0', left: `${heart.left}%`, fontSize: '2rem', pointerEvents: 'none', zIndex: 100, animation: 'floatUp 3s ease-out forwards' }}>
           ❤️
