@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
+import { MiniKit } from "@coinbase/minikit-js";
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
 
-// Расширяем типы, чтобы Vercel не ругался
+
 interface ExtendedUser {
   address?: `0x${string}`;
   walletAddress?: `0x${string}`;
@@ -18,15 +19,29 @@ interface ExtendedContext {
 }
 
 export default function Home() {
-  // Явно указываем типы для context
+  
   const { isFrameReady, setFrameReady, context } = useMiniKit() as { 
     isFrameReady: boolean; 
     setFrameReady: () => void; 
     context: ExtendedContext | null 
   };
 
-  // Проверяем адрес во всех возможных полях
+  
   const userAddress = context?.user?.address || context?.user?.walletAddress;
+  const handleLogin = async () => {
+    if (!isFrameReady) {
+      alert("Please open this in the Base / Coinbase Wallet app");
+      return;
+    }
+    try {
+      await MiniKit.commands.walletAuth({
+        nonce: crypto.randomUUID(),
+        requestId: 'login_auth',
+      });
+    } catch (error) {
+      console.error("Login failed", error);
+    }
+  };
   const displayName = context?.user?.displayName || "based anon";
   
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
@@ -50,7 +65,7 @@ export default function Home() {
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
       
-      {/* Плашка Identity */}
+      
       <div style={{ 
         position: 'absolute', top: 0, left: 0, right: 0, height: '60px', 
         backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(10px)',
@@ -65,7 +80,20 @@ export default function Home() {
           </Identity>
         ) : (
           <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '12px' }}>
-            👋 Guest Mode (Please open in Base App/Farcaster)
+          <button 
+  onClick={handleLogin}
+  style={{ 
+    background: 'rgba(255,255,255,0.1)', 
+    border: '1px solid rgba(255,255,255,0.2)', 
+    color: 'white', 
+    borderRadius: '20px', 
+    padding: '6px 16px', 
+    fontSize: '12px', 
+    cursor: 'pointer' 
+  }}
+>
+  Verify Wallet
+</button>
           </span>
         )}
       </div>
