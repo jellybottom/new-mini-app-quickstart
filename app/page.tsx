@@ -31,8 +31,8 @@ export default function Home() {
   // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
   const { isFrameReady, setFrameReady, context } = miniKit;
-  
-  const { user: _authUser, authenticate } = useAuthenticate(); 
+  // @ts-expect-error: authenticate is available but user property might be missing
+  const { user: _authUser, authenticate } = useAuthenticate() as any;
   const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
   
   // @ts-expect-error: displayName optional in context
