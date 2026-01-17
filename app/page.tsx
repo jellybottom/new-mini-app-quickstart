@@ -8,7 +8,7 @@ import { base } from 'viem/chains';
 
 export default function Home() {
   const { isFrameReady, setFrameReady, context } = useMiniKit();
-  // @ts-expect-error
+  // @ts-expect-error: Address exists in MiniKit context but not in default type
   const userAddress = context?.user?.address as `0x${string}` | undefined;
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
