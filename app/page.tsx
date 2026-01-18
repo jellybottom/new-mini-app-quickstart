@@ -125,7 +125,7 @@ export default function Home() {
           calls={[{
             to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
             value: BigInt(0),
-            data: '0x3233c70f' //  sayThanks()
+            data: '0x' //  sayThanks()
           }]}
         >
           <TransactionButton 
