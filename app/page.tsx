@@ -129,7 +129,7 @@ export default function Home() {
                 chainId={8453}
                 calls={[{
                   to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-                  value: BigInt(0), 
+                  value: BigInt(1), 
                   data: '0x3233c70f'
                 }]}
               >
