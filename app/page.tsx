@@ -129,34 +129,25 @@ export default function Home() {
         FEEL THE VIBE
       </button>
 
-      {/* button thx у */}
+      {/* Кнопка благодарности через контракт */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-        <button 
-          onClick={handleSayThanks}
-          disabled={isPending}
-          className={styles.thanksButton}
-          style={{
-            width: '100%',
-            padding: '12px',
-            borderRadius: '10px',
-            backgroundColor: '#0052FF',
-            color: 'white',
-            fontWeight: 'bold',
-            border: 'none',
-            cursor: isPending ? 'not-allowed' : 'pointer',
-            fontSize: '16px',
-            boxShadow: '0 4px 12px rgba(0, 82, 255, 0.2)'
-          }}
+        <Transaction
+          chainId={8453}
+          calls={[{
+            to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+            value: BigInt(0),
+            data: '0x3233c70f' // Функция sayThanks()
+          }]}
         >
-          {isPending ? 'Confirm in Wallet...' : 'Say Thanks to Jesse'}
-        </button>
-        
-        {/* status */}
-        {isPending && (
-          <p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
-            Check your wallet to confirm...
-          </p>
-        )}
+          <TransactionButton 
+            text="Say Thanks to Jesse" 
+            className={styles.thanksButton} 
+          />
+          <TransactionStatus className={styles.txStatus}>
+            <TransactionStatusLabel className={styles.txLabel} />
+            <TransactionStatusAction className={styles.txAction} />
+          </TransactionStatus>
+        </Transaction>
       </div>
     </div>
   </div>
