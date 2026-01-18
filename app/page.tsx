@@ -101,7 +101,7 @@ export default function Home() {
       ))}
       
       
-      <div className={styles.content}>
+     <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -114,16 +114,16 @@ export default function Home() {
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
-            Hey {displayName}, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
+            Hey {displayName}, you look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
           </p>
           
           <div className={styles.form}>
-            {/* heart button*/}
+            {/* heart button */}
             <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
               FEEL THE VIBE
             </button>
 
-            {/* tx thank  */}
+            {/* tx thank */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px' }}>
               <Transaction
                 chainId={8453}
@@ -153,6 +153,8 @@ export default function Home() {
               </Transaction>
             </div>
           </div>
+        </div>
+      </div>
 
       <style jsx global>{`
         @keyframes floatUp {
