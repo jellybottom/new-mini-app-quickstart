@@ -6,7 +6,13 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
-
+import { 
+  Transaction, 
+  TransactionButton, 
+  TransactionStatus, 
+  TransactionStatusLabel, 
+  TransactionStatusAction 
+} from '@coinbase/onchainkit/transaction';
 
 
 interface ExtendedUser {
@@ -114,9 +120,37 @@ export default function Home() {
             <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
               FEEL THE VIBE
             </button>
-          </div>
-        </div>
-      </div>
+          {/* thanks button */}
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px' }}>
+    <Transaction
+      chainId={8453}
+      calls={[{
+        to: '0x477b8dA962497985483259C3943D364379e496E7',
+        value: 0n,
+        // hex-code "Thanks Jesse"
+        data: '0x5468616e6b73204a65737365' 
+      }]}
+    >
+      <TransactionButton 
+        text="Say Thanks to Jesse" 
+        style={{ 
+          width: '200px', 
+          height: '40px', 
+          fontSize: '14px', 
+          backgroundColor: '#0052FF', 
+          borderRadius: '12px',
+          border: 'none',
+          color: 'white',
+          cursor: 'pointer'
+        }} 
+      />
+      <TransactionStatus style={{ marginTop: '8px' }}>
+        <TransactionStatusLabel style={{ color: 'white', fontSize: '12px' }} />
+        <TransactionStatusAction style={{ color: '#0052FF', fontSize: '12px' }} />
+      </TransactionStatus>
+    </Transaction>
+  </div>
+</div>
 
       <style jsx global>{`
         @keyframes floatUp {
