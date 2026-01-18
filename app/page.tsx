@@ -135,16 +135,7 @@ export default function Home() {
               >
                 <TransactionButton 
                   text="Say Thanks to Jesse" 
-                  style={{ 
-                    width: '200px', 
-                    height: '40px', 
-                    fontSize: '14px', 
-                    backgroundColor: '#0052FF', 
-                    borderRadius: '12px',
-                    border: 'none', 
-                    color: 'white', 
-                    cursor: 'pointer'
-                  }} 
+                  className={styles.thanksButton} 
                 />
                 <TransactionStatus style={{ marginTop: '8px' }}>
                   <TransactionStatusLabel style={{ color: 'white', fontSize: '12px' }} />
@@ -156,6 +147,7 @@ export default function Home() {
         </div>
       </div>
 
+     
       <style jsx global>{`
         @keyframes floatUp {
           0% { transform: translateY(0); opacity: 1; }
