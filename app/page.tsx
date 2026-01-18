@@ -26,31 +26,6 @@ interface MiniKitReturn {
   
 }
 
-const APP_METADATA = {
-  version: "1.0.1",
-  build: "2024.01.18",
-  author: "Based Developer",
-  status: "Experimental",
-  tags: ["base", "pepe", "onchain"]
-};
-
-const COLOR_PALETTE = {
-  primary: "#00ff00",
-  secondary: "#005500",
-  background: "#000000",
-  accent: "#ffffff",
-  shadow: "rgba(0, 255, 0, 0.2)"
-};
-
-const TRANSLATIONS = {
-  en: {
-    welcome: "Welcome to Based World",
-    error: "Transaction failed",
-    success: "Vibe sent!",
-    loading: "Connecting to Base..."
-  }
-};
-
 export default function Home() {
   // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
