@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
-import { useAccount, usePrepareContractWrite, useContractWrite } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi'; 
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
 
+// ABI  BasedThanks
 const contractAbi = [
   {
     "inputs": [],
@@ -39,6 +40,7 @@ export default function Home() {
   const { isFrameReady, setFrameReady, context } = miniKit;
   
   const { address: userAddress } = useAccount(); 
+  const { writeContract, isPending } = useWriteContract();
 
   const finalAddress = context?.user?.address || userAddress;
   const displayName = context?.user?.displayName || "based anon";
@@ -47,35 +49,6 @@ export default function Home() {
   useEffect(() => {
     if (!isFrameReady) setFrameReady(true);
   }, [isFrameReady, setFrameReady]);
-
-  const { config } = usePrepareContractWrite({
-    address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35' as const, 
-    abi: contractAbi,
-    functionName: 'sayThanks',
-    chainId: base.id,
-    value: BigInt(0), // gasonly
-  });
-
-  const { write, isPending } = useContractWrite({
-    ...config,
-    onSuccess: (hash) => {
-      console.log("Thanks tx success! Hash:", hash);
-      alert("Thanks to Jesse sent on-chain! ❤️ Tx hash logged.");
-      spawnHearts();
-    },
-    onError: (error) => {
-      console.error("Tx failed:", error);
-      alert("Tx failed — check wallet or network.");
-    },
-  });
-
-  const handleThanksJesse = () => {
-    if (!write || isPending) {
-      alert("Tx in progress or connect wallet");
-      return;
-    }
-    write(); // Триггерит wallet popup
-  };
 
   const spawnHearts = () => {
     const newHearts = Array.from({ length: 10 }).map((_, i) => ({
@@ -87,6 +60,25 @@ export default function Home() {
     setTimeout(() => {
       setHearts((prev) => prev.filter((h) => !newHearts.find((nh) => nh.id === h.id)));
     }, 3000);
+  };
+
+  const handleThanksJesse = () => {
+    writeContract({
+      address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+      abi: contractAbi,
+      functionName: 'sayThanks',
+      chainId: base.id,
+    }, {
+      onSuccess: (hash) => {
+        console.log("Tx Success! Hash:", hash);
+        alert("Thanks to Jesse sent on-chain! ❤️");
+        spawnHearts();
+      },
+      onError: (error) => {
+        console.error("Tx failed:", error);
+        alert("Transaction failed. Make sure you are in a Base-compatible wallet.");
+      },
+    });
   };
 
   return (
@@ -132,7 +124,6 @@ export default function Home() {
           </p>
           
           <div className={styles.form}>
-            {/* FEEL THE VIBE */}
             <button 
               type="button" 
               onClick={spawnHearts} 
@@ -142,11 +133,11 @@ export default function Home() {
               FEEL THE VIBE
             </button>
 
-            {/* Say Thanks to Jesse — маленькая, под главной */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
               <button 
                 onClick={handleThanksJesse}
                 className={styles.thanksButton}
+                disabled={isPending}
                 style={{ 
                   width: '80%', 
                   background: 'rgba(0, 255, 0, 0.1)', 
@@ -155,11 +146,11 @@ export default function Home() {
                   borderRadius: '20px', 
                   padding: '8px 16px', 
                   fontSize: '12px', 
-                  cursor: 'pointer' 
+                  cursor: isPending ? 'not-allowed' : 'pointer',
+                  opacity: isPending ? 0.5 : 1
                 }}
-                disabled={!write || isPending}
               >
-                Say Thanks to Jesse 🚀
+                {isPending ? "Sending..." : "Say Thanks to Jesse 🚀"}
               </button>
             </div>
           </div>
@@ -170,19 +161,6 @@ export default function Home() {
         @keyframes floatUp {
           0% { transform: translateY(0); opacity: 1; }
           100% { transform: translateY(-100vh); opacity: 0; }
-        }
-
-        button:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .thanksButton {
-          transition: all 0.2s ease;
-        }
-
-        .thanksButton:hover:not(:disabled) {
-          background: rgba(0, 255, 0, 0.2);
         }
       `}</style>
     </div>
