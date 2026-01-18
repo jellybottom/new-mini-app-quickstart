@@ -1,18 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
-import { useAccount } from 'wagmi';
+import { useAccount, useWriteContract } from 'wagmi';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
-import { base } from 'viem/chains';
-import { 
-  Transaction, 
-  TransactionButton, 
-  TransactionStatus, 
-  TransactionStatusLabel, 
-  TransactionStatusAction 
-} from '@coinbase/onchainkit/transaction';
+import { base } from 'wagmi/chains';
 
 
 interface ExtendedUser {
@@ -62,27 +55,34 @@ export default function Home() {
 
   
 
+  const handleSayThanks = () => {
+    writeContract({
+      address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+      abi: [{
+        "inputs": [],
+        "name": "sayThanks",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }],
+      functionName: 'sayThanks',
+      chainId: base.id,
+    });
+  };
+
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
+      {/* Header Identity */}
       <div style={{ 
-        position: 'absolute', 
-        top: 0, 
-        left: 0, 
-        right: 0, 
-        height: '60px', 
-        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
-        backdropFilter: 'blur(10px)',
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        zIndex: 1000,
-        borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-        transition: 'all 0.3s ease'
+        position: 'absolute', top: 0, left: 0, right: 0, height: '60px', 
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(10px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
         <Identity address={finalAddress} chain={base}>
           <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
           <Name style={{ color: 'white', fontSize: '14px' }}>
-            {finalAddress ? undefined : displayName} {/* Fallback  Farcaster*/}
+            {finalAddress ? undefined : displayName}
           </Name>
           <Badge />
         </Identity>
@@ -102,50 +102,64 @@ export default function Home() {
       
       
     <div className={styles.content}>
-        <div className={styles.waitlistForm}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
-              alt="Based Pepe" 
-              style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
-            />
-          </div>
+  <div className={styles.waitlistForm}>
+    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img 
+        src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
+        alt="Based Pepe" 
+        style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
+      />
+    </div>
 
-          <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
-          <p className={styles.subtitle}>
-            Hey {displayName}, you look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
+    <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
+    <p className={styles.subtitle}>
+      Hey {displayName}, you look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
+    </p>
+    
+    <div className={styles.form}>
+      {/* heart button */}
+      <button 
+        type="button" 
+        onClick={spawnHearts} 
+        className={styles.joinButton} 
+        style={{ width: '100%', cursor: 'pointer', marginBottom: '16px' }}
+      >
+        FEEL THE VIBE
+      </button>
+
+      {/* button thx у */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        <button 
+          onClick={handleSayThanks}
+          disabled={isPending}
+          className={styles.thanksButton}
+          style={{
+            width: '100%',
+            padding: '12px',
+            borderRadius: '10px',
+            backgroundColor: '#0052FF',
+            color: 'white',
+            fontWeight: 'bold',
+            border: 'none',
+            cursor: isPending ? 'not-allowed' : 'pointer',
+            fontSize: '16px',
+            boxShadow: '0 4px 12px rgba(0, 82, 255, 0.2)'
+          }}
+        >
+          {isPending ? 'Confirm in Wallet...' : 'Say Thanks to Jesse'}
+        </button>
+        
+        {/* status */}
+        {isPending && (
+          <p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+            Check your wallet to confirm...
           </p>
-          
-          <div className={styles.form}>
-            {/* heart button */}
-            <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
-              FEEL THE VIBE
-            </button>
-
-            {/* tx thank */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '16px' }}>
-              <Transaction
-                chainId={8453}
-                calls={[{
-                  to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-                  value: BigInt(1), 
-                  data: '0x3233c70f'
-                }]}
-              >
-                <TransactionButton 
-                  text="Say Thanks to Jesse" 
-                  className={styles.thanksButton} 
-                />
-                <TransactionStatus className={styles.txStatus}>
-                  <TransactionStatusLabel className={styles.txLabel} />
-                  <TransactionStatusAction className={styles.txAction} />
-                </TransactionStatus>
-              </Transaction>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
+    </div>
+  </div>
+</div>
 
       <style jsx global>{`
         @keyframes floatUp {
