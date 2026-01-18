@@ -6,7 +6,6 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
-import { Transaction, TransactionButton, TransactionStatus, TransactionStatusLabel, TransactionStatusAction } from '@coinbase/onchainkit/transaction';
 
 
 interface ExtendedUser {
@@ -117,26 +116,23 @@ export default function Home() {
         FEEL THE VIBE
       </button>
 
-      {/* tx thanks */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-        <Transaction
-          chainId={8453}
-          isSponsored={false}
-          calls={[{
-            to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-            value: BigInt(0),
-            data: '0x' //  sayThanks()
-          }]}
-        >
-          <TransactionButton 
-            text="Say Thanks to Jesse" 
-            className={styles.thanksButton} 
-          />
-          <TransactionStatus className={styles.txStatus}>
-            <TransactionStatusLabel className={styles.txLabel} />
-            <TransactionStatusAction className={styles.txAction} />
-          </TransactionStatus>
-        </Transaction>
+  <button 
+    onClick={async () => {
+      if (!miniKit) return;
+      
+      await miniKit.commands.sendCalls({
+        calls: [{
+          to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+          data: '0x3233c70f',
+          value: '0',
+        }],
+      });
+    }}
+    className={styles.thanksButton}
+  >
+    Say Thanks to Jesse
+  </button>
       </div>
     </div>
   </div>
