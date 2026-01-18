@@ -41,20 +41,6 @@ export default function Home() {
     if (!isFrameReady) setFrameReady(true);
   }, [isFrameReady, setFrameReady]);
 
-  const handleLogin = async () => {
-    if (!isFrameReady) {
-      alert("Please open this in the Base / Coinbase Wallet app");
-      return;
-    }
-    try {
-      const authenticatedUser = await authenticate();
-      if (authenticatedUser) {
-        console.log("Authenticated! FID:", authenticatedUser.fid);
-      }
-    } catch (error) {
-      console.error("Auth failed", error);
-    }
-  };
 
   const spawnHearts = () => {
     const newHearts = Array.from({ length: 10 }).map((_, i) => ({
