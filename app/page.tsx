@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { useAccount, useSendTransaction } from 'wagmi'; 
-import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
@@ -30,7 +29,9 @@ export default function Home() {
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
   useEffect(() => {
-    if (miniKit && !miniKit.isFrameReady) miniKit.setFrameReady(true);
+    if (miniKit && !miniKit.isFrameReady) {
+      miniKit.setFrameReady(true);
+    }
   }, [miniKit]);
 
   const spawnHearts = () => {
@@ -45,9 +46,14 @@ export default function Home() {
   };
 
   const handleThanksJesse = () => {
+    if (!finalAddress) {
+      alert("Please connect your wallet first!");
+      return;
+    }
+
     sendTransaction({
-      to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35', // ПРОВЕРЬ ЭТОТ АДРЕС В BASESCAN!
-      data: '0x3233c70f', // Селектор функции sayThanks()
+      to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+      data: '0x3233c70f', 
     }, {
       onSuccess: (hash) => {
         alert(`SENT! Hash: ${hash.substring(0, 10)}...`);
@@ -81,8 +87,14 @@ export default function Home() {
       
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
-          <img src="/basedpepe.jpg" alt="Based" style={{ width: '150px', borderRadius: '15px', marginBottom: '20px' }} />
-          <h1 className={styles.title}>BASED THANKS</h1>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <img 
+              src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
+              alt="Based Pepe" 
+              style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
+            />
+          </div>
+          <h1 className={styles.title}>BASED APP</h1>
           <p className={styles.subtitle}>Stay Based, {displayName} ❤️</p>
           
           <div className={styles.form}>
@@ -95,7 +107,8 @@ export default function Home() {
               disabled={isPending}
               style={{ 
                 width: '100%', background: 'rgba(0, 255, 0, 0.1)', border: '1px solid green', 
-                color: 'white', borderRadius: '20px', padding: '12px' 
+                color: 'white', borderRadius: '20px', padding: '12px',
+                cursor: isPending ? 'not-allowed' : 'pointer'
               }}
             >
               {isPending ? "Confirming..." : "Say Thanks to Jesse 🚀"}
