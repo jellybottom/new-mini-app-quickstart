@@ -120,18 +120,6 @@ export default function Home() {
               alt="Based Pepe" 
               style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
             />
-	<div style={{ 
-  		fontSize: '10px', 
-  		color: '#00ff00', 
-  		marginTop: '10px', 
-  		textTransform: 'uppercase', 
-  		letterSpacing: '2px',
-  		textAlign: 'center',
- 		 fontWeight: 'bold'
-			}}>
-  			Based Level: Maximum 🚀
-				</div>		
-          </div>
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
