@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
 
-// ABI  BasedThanks
+// ABI BasedThanks
 const contractAbi = [
   {
     "inputs": [],
@@ -63,34 +63,32 @@ export default function Home() {
   };
 
   const handleThanksJesse = () => {
-  if (!finalAddress) {
-    alert("Please connect your wallet first!");
-    return;
-  }
+    if (!finalAddress) {
+      alert("Please connect your wallet first!");
+      return;
+    }
 
-  writeContract({
-    address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-    abi: contractAbi,
-    functionName: 'sayThanks',
-    chainId: base.id,
-  }, {
-    onSuccess: (hash) => {
-      console.log("Tx Success! Hash:", hash);
-      alert(`Transaction Sent! Hash: ${hash.substring(0, 12)}...`);
-      spawnHearts();
-    },
-    onError: (error) => {
-      console.error("Tx failed:", error);
-      // Используем проверку типа вместо any
-      const message = error instanceof Error ? error.message : "Unknown error";
-      alert("Error: " + message);
-    },
-  });
-};
+    writeContract({
+      address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+      abi: contractAbi,
+      functionName: 'sayThanks',
+      chainId: base.id,
+    }, {
+      onSuccess: (hash) => {
+        console.log("Tx Success! Hash:", hash);
+        alert(`Tx Sent! Hash: ${hash.substring(0, 12)}... Check BaseScan.`);
+        spawnHearts();
+      },
+      onError: (error) => {
+        console.error("Tx failed:", error);
+        const message = error instanceof Error ? error.message : "Unknown error";
+        alert("Error: " + message);
+      },
+    });
+  };
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
-      {/* Header Identity */}
       <div style={{ 
         position: 'absolute', top: 0, left: 0, right: 0, height: '60px', 
         backgroundColor: 'rgba(0, 0, 0, 0.7)', backdropFilter: 'blur(10px)',
@@ -117,7 +115,6 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="https://the-awesome-and-based.vercel.app/basedpepe.jpg" 
               alt="Based Pepe" 
@@ -163,13 +160,3 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes floatUp {
-          0% { transform: translateY(0); opacity: 1; }
-          100% { transform: translateY(-100vh); opacity: 0; }
-        }
-      `}</style>
-    </div>
-  );
-}
