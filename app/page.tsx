@@ -7,6 +7,7 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+import { ConnectWallet } from '@coinbase/onchainkit/wallet'
 
 
 interface ExtendedUser {
@@ -105,11 +106,14 @@ export default function Home() {
 
       <div style={{ height: '60px' }}></div>
 
+      {!userAddress && <ConnectWallet className="hidden" />}
+
       {hearts.map((heart) => (
         <div key={heart.id} style={{ position: 'absolute', bottom: '0', left: `${heart.left}%`, fontSize: '2rem', pointerEvents: 'none', zIndex: 100, animation: 'floatUp 3s ease-out forwards' }}>
           ❤️
         </div>
       ))}
+      
       
       <div className={styles.content}>
         <div className={styles.waitlistForm}>
