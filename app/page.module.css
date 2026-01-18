@@ -124,3 +124,23 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(247, 217, 84, 0.4);
 }
+
+.thanksButton {
+  background: #0052FF; /* Фирменный синий Base */
+  color: white;
+  border: none;
+  padding: 0.6rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 200px;
+  margin-top: 0.5rem;
+}
+
+.thanksButton:hover {
+  background: #0042cc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 82, 255, 0.3);
+}
