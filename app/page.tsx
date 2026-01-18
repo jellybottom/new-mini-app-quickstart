@@ -26,6 +26,14 @@ interface MiniKitReturn {
   
 }
 
+const APP_METADATA = {
+  version: "1.0.1",
+  build: "2024.01.18",
+  author: "Based Developer",
+  status: "Experimental",
+  tags: ["base", "pepe", "onchain"]
+};
+
 export default function Home() {
   // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
