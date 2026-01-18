@@ -63,29 +63,30 @@ export default function Home() {
   };
 
   const handleThanksJesse = () => {
-    if (!finalAddress) {
-      alert("Please connect your wallet first!");
-      return;
-    }
+  if (!finalAddress) {
+    alert("Please connect your wallet first!");
+    return;
+  }
 
-    writeContract({
-      address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-      abi: contractAbi,
-      functionName: 'sayThanks',
-      chainId: base.id,
-    }, {
-      onSuccess: (hash) => {
-        
-        console.log("Tx Hash:", hash);
-        alert(`Tx Sent! Hash: ${hash.substring(0, 10)}... Check BaseScan.`);
-        spawnHearts();
-      },
-      onError: (error: any) => {
-        console.error("Full error:", error);
-        alert("Error: " + (error.shortMessage || "Check your Base ETH balance"));
-      },
-    });
-  };
+  writeContract({
+    address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
+    abi: contractAbi,
+    functionName: 'sayThanks',
+    chainId: base.id,
+  }, {
+    onSuccess: (hash) => {
+      console.log("Tx Success! Hash:", hash);
+      alert(`Transaction Sent! Hash: ${hash.substring(0, 12)}...`);
+      spawnHearts();
+    },
+    onError: (error) => {
+      console.error("Tx failed:", error);
+      // Используем проверку типа вместо any
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert("Error: " + message);
+    },
+  });
+};
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
