@@ -63,6 +63,11 @@ export default function Home() {
   };
 
   const handleThanksJesse = () => {
+    if (!finalAddress) {
+      alert("Please connect your wallet first!");
+      return;
+    }
+
     writeContract({
       address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
       abi: contractAbi,
@@ -70,13 +75,14 @@ export default function Home() {
       chainId: base.id,
     }, {
       onSuccess: (hash) => {
-        console.log("Tx Success! Hash:", hash);
-        alert("Thanks to Jesse sent on-chain! ❤️");
+        
+        console.log("Tx Hash:", hash);
+        alert(`Tx Sent! Hash: ${hash.substring(0, 10)}... Check BaseScan.`);
         spawnHearts();
       },
-      onError: (error) => {
-        console.error("Tx failed:", error);
-        alert("Transaction failed. Make sure you are in a Base-compatible wallet.");
+      onError: (error: any) => {
+        console.error("Full error:", error);
+        alert("Error: " + (error.shortMessage || "Check your Base ETH balance"));
       },
     });
   };
