@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
-import { useAccount, useWriteContract } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
@@ -117,14 +117,14 @@ export default function Home() {
         FEEL THE VIBE
       </button>
 
-      {/* Кнопка благодарности через контракт */}
+      {/* tx thanks */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         <Transaction
           chainId={8453}
           calls={[{
             to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
             value: BigInt(0),
-            data: '0x3233c70f' // Функция sayThanks()
+            data: '0x3233c70f' //  sayThanks()
           }]}
         >
           <TransactionButton 
