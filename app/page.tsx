@@ -6,6 +6,7 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
+import { Transaction, TransactionButton, TransactionStatus, TransactionStatusLabel, TransactionStatusAction } from '@coinbase/onchainkit/transaction';
 
 
 interface ExtendedUser {
@@ -31,7 +32,7 @@ export default function Home() {
   const { isFrameReady, setFrameReady, context } = miniKit;
   
   const { address: userAddress } = useAccount(); 
-  const { writeContract, isPending } = useWriteContract();
+
 
   const finalAddress = context?.user?.address || userAddress;
   const displayName = context?.user?.displayName || "based anon";
@@ -56,20 +57,7 @@ export default function Home() {
 
   
 
-  const handleSayThanks = () => {
-    writeContract({
-      address: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
-      abi: [{
-        "inputs": [],
-        "name": "sayThanks",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }],
-      functionName: 'sayThanks',
-      chainId: base.id,
-    });
-  };
+  
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
