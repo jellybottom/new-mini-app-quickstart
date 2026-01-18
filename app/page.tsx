@@ -22,6 +22,7 @@ interface MiniKitReturn {
   context: ExtendedContext;
   isFrameReady: boolean;
   setFrameReady: (ready: boolean) => void;
+  commands: any;
   
 }
 
