@@ -124,7 +124,7 @@ export default function Home() {
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
-            Hey {displayName}, You look based! ❤️ <br /> I wish you all the best!
+            Hey {displayName}, You look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
           </p>
           <div className={styles.form}>
             <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
