@@ -83,7 +83,7 @@ export default function Home() {
         <Identity address={finalAddress} chain={base} showEns={true}>
           <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
           <Name style={{ color: 'white', fontSize: '14px' }}>
-            {finalAddress ? undefined : displayName} {/* Fallback  Farcaster*/}
+            {isNameLoading ? shortAddress : ensName || displayName || shortAddress}
           </Name>
           <Badge />
         </Identity>
