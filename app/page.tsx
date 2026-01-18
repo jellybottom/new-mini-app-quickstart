@@ -120,6 +120,7 @@ export default function Home() {
               alt="Based Pepe" 
               style={{ width: '150px', height: '150px', borderRadius: '15px', objectFit: 'cover' }} 
             />
+          </div>
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
@@ -132,8 +133,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-
 
       <style jsx global>{`
         @keyframes floatUp {
