@@ -7,7 +7,6 @@ import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'wagmi/chains';
 
-// ABI BasedThanks
 const contractAbi = [
   {
     "inputs": [],
@@ -75,12 +74,10 @@ export default function Home() {
       chainId: base.id,
     }, {
       onSuccess: (hash) => {
-        console.log("Tx Success! Hash:", hash);
-        alert(`Tx Sent! Hash: ${hash.substring(0, 12)}... Check BaseScan.`);
+        alert(`Tx Sent! Hash: ${hash.substring(0, 12)}...`);
         spawnHearts();
       },
       onError: (error) => {
-        console.error("Tx failed:", error);
         const message = error instanceof Error ? error.message : "Unknown error";
         alert("Error: " + message);
       },
@@ -124,7 +121,7 @@ export default function Home() {
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
           <p className={styles.subtitle}>
-            Hey {displayName}, you look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
+            Hey {displayName}, you look based ❤️
           </p>
           
           <div className={styles.form}>
@@ -132,31 +129,37 @@ export default function Home() {
               type="button" 
               onClick={spawnHearts} 
               className={styles.joinButton} 
-              style={{ width: '100%', cursor: 'pointer', marginBottom: '16px' }}
+              style={{ width: '100%', marginBottom: '16px' }}
             >
               FEEL THE VIBE
             </button>
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-              <button 
-                onClick={handleThanksJesse}
-                className={styles.thanksButton}
-                disabled={isPending}
-                style={{ 
-                  width: '80%', 
-                  background: 'rgba(0, 255, 0, 0.1)', 
-                  border: '1px solid rgba(0, 255, 0, 0.3)', 
-                  color: 'white', 
-                  borderRadius: '20px', 
-                  padding: '8px 16px', 
-                  fontSize: '12px', 
-                  cursor: isPending ? 'not-allowed' : 'pointer',
-                  opacity: isPending ? 0.5 : 1
-                }}
-              >
-                {isPending ? "Sending..." : "Say Thanks to Jesse 🚀"}
-              </button>
-            </div>
+            <button 
+              onClick={handleThanksJesse}
+              className={styles.thanksButton}
+              disabled={isPending}
+              style={{ 
+                width: '100%', 
+                background: 'rgba(0, 255, 0, 0.1)', 
+                border: '1px solid rgba(0, 255, 0, 0.3)', 
+                color: 'white', 
+                borderRadius: '20px', 
+                padding: '12px',
+                cursor: isPending ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {isPending ? "Sending..." : "Say Thanks to Jesse 🚀"}
+            </button>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes floatUp {
+          0% { transform: translateY(0); opacity: 1; }
+          100% { transform: translateY(-100vh); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
