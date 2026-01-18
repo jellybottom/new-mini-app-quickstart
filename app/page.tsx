@@ -128,9 +128,9 @@ export default function Home() {
               <Transaction
                 chainId={8453}
                 calls={[{
-                  to: '0x477b8dA962497985483259C3943D364379e496E7',
+                  to: '0xEdF4D7d05F9e532Fb1ABF669D6547ea54596276c',
                   value: BigInt(0),
-                  data: '0x5468616e6b73204a65737365' 
+                  data: '0x3233c70f' 
                 }]}
               >
                 <TransactionButton 
