@@ -42,6 +42,15 @@ const COLOR_PALETTE = {
   shadow: "rgba(0, 255, 0, 0.2)"
 };
 
+const TRANSLATIONS = {
+  en: {
+    welcome: "Welcome to Based World",
+    error: "Transaction failed",
+    success: "Vibe sent!",
+    loading: "Connecting to Base..."
+  }
+};
+
 export default function Home() {
   // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
