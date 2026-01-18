@@ -121,6 +121,7 @@ export default function Home() {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         <Transaction
           chainId={8453}
+          isSponsored={false}
           calls={[{
             to: '0x85AA7595FA68607953Db6a84030D15232Fe70D35',
             value: BigInt(0),
