@@ -31,6 +31,7 @@ export default function Home() {
   const { isFrameReady, setFrameReady, context } = miniKit;
   
   const { address: userAddress } = useAccount(); 
+  const { writeContract, isPending } = useWriteContract();
 
   const finalAddress = context?.user?.address || userAddress;
   const displayName = context?.user?.displayName || "based anon";
