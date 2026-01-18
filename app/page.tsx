@@ -101,7 +101,7 @@ export default function Home() {
       ))}
       
       
-     <div className={styles.content}>
+    <div className={styles.content}>
         <div className={styles.waitlistForm}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -137,9 +137,9 @@ export default function Home() {
                   text="Say Thanks to Jesse" 
                   className={styles.thanksButton} 
                 />
-                <TransactionStatus style={{ marginTop: '8px' }}>
-                  <TransactionStatusLabel style={{ color: 'white', fontSize: '12px' }} />
-                  <TransactionStatusAction style={{ color: '#0052FF', fontSize: '12px' }} />
+                <TransactionStatus className={styles.txStatus}>
+                  <TransactionStatusLabel className={styles.txLabel} />
+                  <TransactionStatusAction className={styles.txAction} />
                 </TransactionStatus>
               </Transaction>
             </div>
@@ -147,7 +147,6 @@ export default function Home() {
         </div>
       </div>
 
-     
       <style jsx global>{`
         @keyframes floatUp {
           0% { transform: translateY(0); opacity: 1; }

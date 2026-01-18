@@ -126,7 +126,7 @@
 }
 
 .thanksButton {
-  background: #0052FF; /* Фирменный синий Base */
+  background: #0052FF; /* blue Base */
   color: white;
   border: none;
   padding: 0.6rem 2rem;
@@ -143,4 +143,18 @@
   background: #0042cc;
   transform: translateY(-1px);
   box-shadow: 0 4px 15px rgba(0, 82, 255, 0.3);
+}
+
+.txStatus {
+  margin-top: 8px;
+}
+
+.txLabel {
+  color: white;
+  font-size: 12px;
+}
+
+.txAction {
+  color: #0052FF;
+  font-size: 12px;
 }
