@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
-import { useAccount, useEnsName } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
@@ -33,11 +33,6 @@ export default function Home() {
   
   const { address: userAddress } = useAccount(); 
 
-  const { data: ensName, isLoading: isNameLoading } = useEnsName({
-    address: userAddress,
-    chainId: base.id,
-  });
-  
   const finalAddress = context?.user?.address || userAddress;
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
@@ -45,8 +40,6 @@ export default function Home() {
   useEffect(() => {
     if (!isFrameReady) setFrameReady(true);
   }, [isFrameReady, setFrameReady]);
-
-  const shortAddress = finalAddress ? `${finalAddress.slice(0, 6)}...${finalAddress.slice(-4)}` : undefined;
 
 
   const spawnHearts = () => {
@@ -80,10 +73,10 @@ export default function Home() {
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         transition: 'all 0.3s ease'
       }}>
-        <Identity address={finalAddress} chain={base} showEns={true}>
+        <Identity address={finalAddress} chain={base}>
           <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
           <Name style={{ color: 'white', fontSize: '14px' }}>
-            {isNameLoading ? shortAddress : ensName || displayName || shortAddress}
+            {finalAddress ? undefined : displayName} {/* Fallback  Farcaster*/}
           </Name>
           <Badge />
         </Identity>
