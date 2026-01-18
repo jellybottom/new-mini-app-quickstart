@@ -34,6 +34,14 @@ const APP_METADATA = {
   tags: ["base", "pepe", "onchain"]
 };
 
+const COLOR_PALETTE = {
+  primary: "#00ff00",
+  secondary: "#005500",
+  background: "#000000",
+  accent: "#ffffff",
+  shadow: "rgba(0, 255, 0, 0.2)"
+};
+
 export default function Home() {
   // @ts-expect-error: cast for extended types 
   const miniKit = useMiniKit() as MiniKitReturn;
