@@ -91,7 +91,7 @@ export default function Home() {
   } catch (error) {
     console.error("Vibe check failed:", error);
   }
-  };
+};
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
