@@ -9,7 +9,7 @@ import "@coinbase/onchainkit/styles.css";
 const wagmiConfig = createConfig({
   chains: [base],
   transports: {
-    [base.id]: http('https://mainnet.base.org'), 
+    [base.id]: http('https://base-mainnet.g.alchemy.com/v2/qPL6UtzE9eHLxy9g4alvI'), 
   },
 });
 
