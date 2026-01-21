@@ -58,7 +58,7 @@ export default function Home() {
     }
   };
 
-const sayThanksToJesse = async () => {
+  const sayThanksToJesse = async () => {
   if (typeof window !== 'undefined' && window.ethereum) {
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -165,19 +165,18 @@ const sayThanksToJesse = async () => {
               FEEL THE VIBE
             </button>
 
-  
             <button 
-            type="button" 
-            onClick={sayThanksToJesse} 
-            className={styles.joinButton} 
-            style={{ 
-            width: '100%', 
-            cursor: 'pointer', 
-            backgroundColor: '#0052ff', // Фирменный синий цвет Base
-            marginTop: '10px'
-            }}
+              type="button" 
+              onClick={() => sayThanksToJesse()} 
+              className={styles.joinButton} 
+              style={{ 
+                width: '100%', 
+                cursor: 'pointer', 
+                backgroundColor: '#0052ff', 
+                marginTop: '10px'
+              }}
             >
-            SAY THANKS TO JESSE 🔵
+              SAY THANKS TO JESSE 🔵
             </button>
           </div>
         </div>
@@ -191,5 +190,4 @@ const sayThanksToJesse = async () => {
       `}</style>
     </div>
   );
-}
 }
