@@ -81,9 +81,14 @@ export default function Home() {
       }}>
         {userAddress || context?.user ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {/* section Base Identity */}
+            {/* section Base Identity - Fixed for Farcaster White Box */}
             {userAddress && (
-              <Identity address={userAddress} chain={base}>
+              <Identity 
+                address={userAddress} 
+                chain={base}
+                schemaId="0xf8b05c79f090979bf4a80270aba232dff11a10d9ca55c4f88de9531794c6ca19"
+                style={{ background: 'transparent', display: 'flex', alignItems: 'center' }}
+              >
                 <Avatar style={{ width: '28px', height: '28px' }} />
                 <Name style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
                 <Badge />
