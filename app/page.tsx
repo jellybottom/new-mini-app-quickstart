@@ -74,23 +74,31 @@ export default function Home() {
   };
 
   const dailyVibeCheck = async () => {
-  console.log("Button clicked!"); // Проверка в консоли
-  if (!userAddress) {
-    alert("Please verify your wallet first!");
-    return;
-  }
-  
-  try {
-    console.log("Sending transaction via MiniKit...");
-    const result = await miniKit.sendTransaction({
-      calls: [{ to: userAddress, value: "0", data: "0x" }],
-    });
-    console.log("Transaction result:", result);
-  } catch (error) {
-    console.error("Vibe check failed:", error);
-    alert("Error: " + (error as Error).message);
-  }
-};
+    console.log("Button clicked!");
+    
+    
+    if (typeof miniKit.sendTransaction !== 'function') {
+      alert("Error: sendTransaction is not a function");
+      return;
+    }
+
+    try {
+      console.log("Starting transaction...");
+      const result = await miniKit.sendTransaction({
+        calls: [
+          {
+            to: userAddress as `0x${string}`,
+            value: "0",
+            data: "0x",
+          },
+        ],
+      });
+      console.log("Success:", result);
+    } catch (error: any) {
+      console.error("Full error:", error);
+      alert("Error: " + (error?.message || "Unknown error"));
+    }
+  };
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
