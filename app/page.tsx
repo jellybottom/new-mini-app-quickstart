@@ -8,6 +8,14 @@ import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
 
+// Сообщаем TypeScript, что у window может быть объект ethereum
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ethereum?: any;
+  }
+}
+
 interface ExtendedUser {
   fid?: number;
   address?: `0x${string}` | undefined;
@@ -56,10 +64,8 @@ export default function Home() {
   };
 
   const sayThanksToJesse = async () => {
-    // @ts-expect-error: ethereum might not exist on window
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
-        // @ts-expect-error: request method is not typed on window.ethereum
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         
         const functionSelector = '0x14068308';
@@ -75,7 +81,6 @@ export default function Home() {
           data: data,
         };
 
-        // @ts-expect-error: ethereum request might be untyped
         await window.ethereum.request({
           method: 'eth_sendTransaction',
           params: [transactionParameters],
