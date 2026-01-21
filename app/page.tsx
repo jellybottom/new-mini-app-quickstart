@@ -83,7 +83,7 @@ export default function Home() {
       try {
         await authenticate();
         return; 
-      } catch (e) {
+      } catch {
         alert("Authentication failed. Please use 'Verify Wallet' button at the top.");
         return;
       }
