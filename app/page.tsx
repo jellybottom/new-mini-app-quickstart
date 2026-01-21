@@ -94,7 +94,7 @@ export default function Home() {
     address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
     abi: checkInAbi,
     functionName: 'checkIn',
-    args: ["Checked in from Based Pepe Vibe! 🚀"],
+    args: ["Checked in cause I'm based and awesome!🐸💎🚀"],
   });
 };    
 
