@@ -22,15 +22,16 @@ export function RootProvider({ children }: { children: ReactNode }) {
         <OnchainKitProvider
           apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
           chain={base}
-          // ВОТ ТУТ МЫ ВКЛЮЧАЕМ MINIKIT ЯВНО
+          
           config={{
             appearance: { mode: "auto" },
             wallet: { display: "modal", preference: "all" },
           }}
-          // Добавляем этот блок обязательно!
+         
           miniKit={{
             enabled: true,
           }}
+          projectId="696a502c8aabd019b25f52e1"
         >
           {children}
         </OnchainKitProvider>
