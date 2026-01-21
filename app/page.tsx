@@ -97,7 +97,7 @@ export default function Home() {
   abi: checkInAbi,
   functionName: 'totalCheckIns',
   query: {
-    refetchInterval: 5000, 
+    refetchInterval: 2000, 
   }
 });
 
@@ -205,7 +205,7 @@ export default function Home() {
           
           {/*  Flex */}
           <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-            <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '4px' }}>
+            <p style={{ fontSize: '15px', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4px', fontWeight: '700', textShadow: '0px 0px 8px rgba(0, 82, 255, 0.4)' }}>
             {totalCheckIns !== undefined 
             ? `${totalCheckIns.toString()} based people checked in` 
             : 'Loading stats...'}
