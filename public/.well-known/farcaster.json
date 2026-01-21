@@ -1,0 +1,18 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjI0MTgwMSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDU4ZEFCZjhCNTM5NzY1ZTA2ZDM3Yjk0OTlEMkQzNDg0ZTdlNmM4ODgifQ",
+    "payload": "eyJkb21haW4iOiJ0aGUtYXdlc29tZS1hbmQtYmFzZWQudmVyY2VsLmFwcCJ9",
+    "signature": "mukRpW8z+s10Nvfkf5zq0QtK8bnTai9KMMB3fcWqRxsQnDBN1UrJ5nB3dEDbCa7IoNllbYbXNYseXLfo3tyJ5Bs="
+  },
+  "frame": {
+    "version": "1",
+    "name": "The Awesome And Based",
+    "iconUrl": "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
+    "homeUrl": "https://the-awesome-and-based.vercel.app",
+    "imageUrl": "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
+    "buttonTitle": "Feel the Based Vibes",
+    "splashImageUrl": "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
+    "splashBackgroundColor": "#000000",
+    "webhookUrl": "https://the-awesome-and-based.vercel.app/api/webhook"
+  }
+}
