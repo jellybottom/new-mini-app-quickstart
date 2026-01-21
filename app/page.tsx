@@ -89,8 +89,7 @@ export default function Home() {
   console.error("Full error:", error);
   const errorMessage = error instanceof Error ? error.message : "Check console";
   alert("Error: " + errorMessage);
-}
-};
+  };
 
   const spawnHearts = () => {
     const newHearts = Array.from({ length: 10 }).map((_, i) => ({
