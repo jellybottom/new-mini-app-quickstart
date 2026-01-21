@@ -26,7 +26,7 @@ interface MiniKitReturn {
   setFrameReady: (ready: boolean) => void;
   sendTransaction: (payload: {
     calls: { to: `0x${string}`; value: string; data: string }[];
-  }) => Promise<any>;
+  }) => Promise<{ transactionHash?: string }>; 
 }
 
 export default function Home() {
