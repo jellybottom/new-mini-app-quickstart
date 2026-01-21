@@ -76,9 +76,8 @@ export default function Home() {
   const dailyVibeCheck = async () => {
     console.log("Button clicked!");
     
-    
-    if (typeof miniKit.sendTransaction !== 'function') {
-      alert("Error: sendTransaction is not a function");
+    if (!userAddress) {
+      alert("Please verify your wallet first!");
       return;
     }
 
@@ -87,16 +86,18 @@ export default function Home() {
       const result = await miniKit.sendTransaction({
         calls: [
           {
-            to: userAddress as `0x${string}`,
+            to: userAddress,
             value: "0",
             data: "0x",
           },
         ],
       });
       console.log("Success:", result);
-    } catch (error: any) {
-      console.error("Full error:", error);
-      alert("Error: " + (error?.message || "Unknown error"));
+    } catch (error: unknown) {
+      // no any
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      console.error("Full error:", errorMessage);
+      alert("Error: " + errorMessage);
     }
   };
 
