@@ -2,11 +2,21 @@
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { useAuthenticate } from "@coinbase/onchainkit/minikit";
-import { useAccount } from 'wagmi';
+import { useAccount, useWriteContract} from 'wagmi';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+
+const checkInAbi = [
+  {
+    "inputs": [{"name": "message", "type": "string"}],
+    "name": "checkIn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+] as const;
 
 
 interface ExtendedUser {
@@ -38,7 +48,7 @@ export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user: _authUser, authenticate } = useAuthenticate() as any;
   const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
-  
+  const { writeContract, isPending } = useWriteContract();
 
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
@@ -73,6 +83,20 @@ export default function Home() {
       setHearts((prev) => prev.filter((h) => !newHearts.find((nh) => nh.id === h.id)));
     }, 3000);
   };
+
+   const handleCheckIn = () => {
+  if (!userAddress) {
+    alert("Connect wallet first!");
+    return;
+  }
+
+  writeContract({
+    address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
+    abi: checkInAbi,
+    functionName: 'checkIn',
+    args: ["Checked in from Based Pepe Vibe! 🚀"],
+  });
+};    
 
 
   return (
@@ -168,6 +192,24 @@ export default function Home() {
               style={{ width: '100%', cursor: 'pointer' }}
             >
               FEEL THE VIBE
+            </button>
+
+            <button 
+              onClick={handleCheckIn}
+              disabled={isPending}
+              style={{ 
+              width: '100%', 
+              background: 'rgba(0, 82, 255, 0.2)', 
+              border: '1px solid rgba(0, 82, 255, 0.4)', 
+              color: 'white', 
+              borderRadius: '12px', 
+              padding: '12px', 
+              fontSize: '14px', 
+              cursor: isPending ? 'not-allowed' : 'pointer',
+              fontWeight: 'bold'
+              }}
+              >
+              {isPending ? 'CHECKING IN...' : 'ON-CHAIN CHECK-IN 🚀'}
             </button>
 
           </div>
