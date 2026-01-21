@@ -78,12 +78,33 @@ export default function Home() {
         display: 'flex', alignItems: 'center', justifyContent: 'center', 
         zIndex: 1000, borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
-        {userAddress ? (
-          <Identity address={userAddress} chain={base}>
-            <Avatar style={{ width: '28px', height: '28px', marginRight: '8px' }} />
-            <Name style={{ color: 'white', fontSize: '14px' }} />
-            <Badge />
-          </Identity>
+        {userAddress || context?.user ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {/* section Base Identity */}
+            {userAddress && (
+              <Identity address={userAddress} chain={base}>
+                <Avatar style={{ width: '28px', height: '28px' }} />
+                <Name style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
+                <Badge />
+              </Identity>
+            )}
+            
+            {/* section Farcaster */}
+            {context?.user?.pfpUrl && (
+              <div style={{ display: 'flex', alignItems: 'center', borderLeft: userAddress ? '1px solid rgba(255,255,255,0.2)' : 'none', paddingLeft: userAddress ? '8px' : '0' }}>
+                <img 
+                  src={context.user.pfpUrl} 
+                  alt="Farcaster PFP" 
+                  style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid rgba(0, 82, 255, 0.5)' }} 
+                />
+                {!userAddress && (
+                  <span style={{ color: 'white', fontSize: '12px', marginLeft: '8px', opacity: 0.8 }}>
+                    {context.user.displayName}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
         ) : (
           <button 
             onClick={handleLogin}
