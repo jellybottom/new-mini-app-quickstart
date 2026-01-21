@@ -74,22 +74,21 @@ export default function Home() {
   };
 
   const dailyVibeCheck = async () => {
+  console.log("Button clicked!"); // Проверка в консоли
   if (!userAddress) {
     alert("Please verify your wallet first!");
     return;
   }
+  
   try {
-    await miniKit.sendTransaction({
-      calls: [
-        {
-          to: userAddress,
-          value: "0",
-          data: "0x",
-        },
-      ],
+    console.log("Sending transaction via MiniKit...");
+    const result = await miniKit.sendTransaction({
+      calls: [{ to: userAddress, value: "0", data: "0x" }],
     });
+    console.log("Transaction result:", result);
   } catch (error) {
     console.error("Vibe check failed:", error);
+    alert("Error: " + (error as Error).message);
   }
 };
 
