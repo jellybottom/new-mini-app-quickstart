@@ -81,7 +81,7 @@ export default function Home() {
       }}>
         {userAddress || context?.user ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {/* Обертка для Identity, чтобы убить белый фон в Warpcast */}
+            {/* Identity cover, Warpcast */}
             {userAddress && (
               <div style={{ background: 'transparent', display: 'flex', alignItems: 'center' }}>
                 <Identity 
@@ -96,7 +96,7 @@ export default function Home() {
               </div>
             )}
             
-            {/* Секция Farcaster */}
+            {/* section Farcaster */}
             {context?.user?.pfpUrl && (
               <div style={{ display: 'flex', alignItems: 'center', borderLeft: userAddress ? '1px solid rgba(255,255,255,0.2)' : 'none', paddingLeft: userAddress ? '8px' : '0' }}>
                 <img 
