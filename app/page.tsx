@@ -61,15 +61,22 @@ export default function Home() {
 const sayThanksToJesse = async () => {
   if (typeof window !== 'undefined' && window.ethereum) {
     try {
-      
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       
+      // Селектор функции sayThanks(string) — это первые 4 байта хеша названия функции
+      const functionSelector = '0x14068308';
+      
+      // Правильно закодированные параметры для строки "Thanks!"
+      const data = functionSelector + 
+        '0000000000000000000000000000000000000000000000000000000000000020' + // Смещение данных
+        '0000000000000000000000000000000000000000000000000000000000000007' + // Длина строки (7 символов)
+        '5468616e6b732100000000000000000000000000000000000000000000000000';   // "Thanks!" в Hex
+
       const transactionParameters = {
-        to: '0x292d678b248D9915C7565FF17296C8242fF8ccF8', 
+        to: '0x292d678b248D9915C7565FF17296C8242fF8ccF8', // Твой контракт
         from: accounts[0],
-        value: '0x5AF3107A4000', 
-        
-        data: '0x14068308000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000075468616e6b732100000000000000000000000000000000000000000000000000',
+        value: '0x5AF3107A4000', // 0.0001 ETH
+        data: data,
       };
 
       await window.ethereum.request({
@@ -77,9 +84,11 @@ const sayThanksToJesse = async () => {
         params: [transactionParameters],
       });
 
-      alert("Based! Message and tip sent to Jesse.");
-    } catch (error) {
-      console.error("User denied or error:", error);
+      alert("Based! Gratitude sent to Jesse on-chain.");
+    } catch (error: any) {
+      console.error("Full error:", error);
+      // Если это ошибка внутри Base App, она может быть связана с провайдером
+      alert("Error: " + (error?.message || "Check console"));
     }
   } else {
     alert("Please open this in Base Wallet!");
