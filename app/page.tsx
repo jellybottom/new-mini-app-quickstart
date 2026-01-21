@@ -7,6 +7,7 @@ import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+import sdk from '@farcaster/frame-sdk';
 
 
 const checkInAbi = [
@@ -62,8 +63,22 @@ export default function Home() {
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
   useEffect(() => {
-    if (!isFrameReady) setFrameReady(true);
-  }, [isFrameReady, setFrameReady]);
+  const init = async () => {
+    try {
+      // Сообщаем оболочке (Warpcast/Coinbase), что Mini App готов
+      await sdk.actions.ready(); 
+      console.log("Mini App SDK: Ready signal sent");
+    } catch (e) {
+      console.error("SDK ready error:", e);
+    }
+    
+    if (!isFrameReady) {
+      setFrameReady(true);
+    }
+  };
+
+  init();
+}, [isFrameReady, setFrameReady]);
 
   const handleLogin = async () => {
     if (!isFrameReady) {
