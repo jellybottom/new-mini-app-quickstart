@@ -8,7 +8,6 @@ import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
 
-
 interface ExtendedUser {
   fid?: number;
   address?: `0x${string}` | undefined;
@@ -23,7 +22,6 @@ interface MiniKitReturn {
   context: ExtendedContext;
   isFrameReady: boolean;
   setFrameReady: (ready: boolean) => void;
-  
 }
 
 export default function Home() {
@@ -33,8 +31,7 @@ export default function Home() {
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user: _authUser, authenticate } = useAuthenticate() as any;
-  const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
-  
+  const { address: userAddress } = useAccount(); 
 
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
@@ -59,36 +56,40 @@ export default function Home() {
   };
 
   const sayThanksToJesse = async () => {
-  if (typeof window !== 'undefined' && window.ethereum) {
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      
-      
-      const functionSelector = '0x14068308';
-      
-      
-      const data = functionSelector + 
-        '0000000000000000000000000000000000000000000000000000000000000020' + 
-        '0000000000000000000000000000000000000000000000000000000000000007' + 
-        '5468616e6b732100000000000000000000000000000000000000000000000000';   
+    // @ts-ignore
+    if (typeof window !== 'undefined' && window.ethereum) {
+      try {
+        // @ts-ignore
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        
+        const functionSelector = '0x14068308';
+        const data = functionSelector + 
+          '0000000000000000000000000000000000000000000000000000000000000020' + 
+          '0000000000000000000000000000000000000000000000000000000000000007' + 
+          '5468616e6b732100000000000000000000000000000000000000000000000000';   
 
-      const transactionParameters = {
-        to: '0x292d678b248D9915C7565FF17296C8242fF8ccF8', 
-        from: accounts[0],
-        value: '0x5AF3107A4000', // 0.0001 ETH
-        data: data,
-      };
+        const transactionParameters = {
+          to: '0x292d678b248D9915C7565FF17296C8242fF8ccF8', 
+          from: accounts[0],
+          value: '0x5AF3107A4000', 
+          data: data,
+        };
 
-      await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [transactionParameters],
-      });
+        // @ts-ignore
+        await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [transactionParameters],
+        });
 
-      alert("Based! Gratitude sent to Jesse on-chain.");
-    } catch (error: unknown) {
-  console.error("Full error:", error);
-  const errorMessage = error instanceof Error ? error.message : "Check console";
-  alert("Error: " + errorMessage);
+        alert("Based! Gratitude sent to Jesse on-chain.");
+      } catch (error: unknown) {
+        console.error("Full error:", error);
+        const errorMessage = error instanceof Error ? error.message : "Check console";
+        alert("Error: " + errorMessage);
+      }
+    } else {
+      alert("Please open this in Base Wallet!");
+    }
   };
 
   const spawnHearts = () => {
