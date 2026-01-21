@@ -2,11 +2,12 @@
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { useAuthenticate } from "@coinbase/onchainkit/minikit";
-import { useAccount, useWriteContract} from 'wagmi';
+import { useAccount, useWriteContract, useReadContract } from 'wagmi';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+
 
 const checkInAbi = [
   {
@@ -14,6 +15,13 @@ const checkInAbi = [
     "name": "checkIn",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalCheckIns",
+    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "stateMutability": "view",
     "type": "function"
   }
 ] as const;
@@ -89,6 +97,15 @@ export default function Home() {
     alert("Connect wallet first!");
     return;
   }
+
+  const { data: totalCheckIns } = useReadContract({
+  address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6',
+  abi: checkInAbi,
+  functionName: 'totalCheckIns',
+  query: {
+    refetchInterval: 5000, 
+  }
+});
 
   writeContract({
     address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
@@ -185,6 +202,16 @@ export default function Home() {
           
           {/*  Flex */}
           <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+            <p style={{ 
+              fontSize: '14px', 
+              color: 'rgba(255, 255, 255, 0.6)', 
+              marginBottom: '4px' 
+              }}>
+              {totalCheckIns !== undefined 
+              ? `${totalCheckIns.toString()} based people checked in` 
+              : 'Loading stats...'}
+            </p>
+            
             <button 
               type="button" 
               onClick={spawnHearts} 
