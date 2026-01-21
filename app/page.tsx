@@ -56,10 +56,10 @@ export default function Home() {
   };
 
   const sayThanksToJesse = async () => {
-    // @ts-ignore
+    // @ts-expect-error: ethereum might not exist on window
     if (typeof window !== 'undefined' && window.ethereum) {
       try {
-        // @ts-ignore
+        // @ts-expect-error: request method is not typed on window.ethereum
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         
         const functionSelector = '0x14068308';
@@ -75,7 +75,7 @@ export default function Home() {
           data: data,
         };
 
-        // @ts-ignore
+        // @ts-expect-error: ethereum request might be untyped
         await window.ethereum.request({
           method: 'eth_sendTransaction',
           params: [transactionParameters],
