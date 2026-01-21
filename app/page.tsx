@@ -92,12 +92,6 @@ export default function Home() {
     }, 3000);
   };
 
-   const handleCheckIn = () => {
-  if (!userAddress) {
-    alert("Connect wallet first!");
-    return;
-  }
-
   const { data: totalCheckIns } = useReadContract({
   address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6',
   abi: checkInAbi,
@@ -107,11 +101,20 @@ export default function Home() {
   }
 });
 
+
+   const handleCheckIn = () => {
+  if (!userAddress) {
+    alert("Connect wallet first!");
+    return;
+  }
+
+  
+
   writeContract({
     address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
     abi: checkInAbi,
     functionName: 'checkIn',
-    args: ["Checked in cause I'm based and awesome!🐸💎🚀"],
+    args: ["Checked in cause I'm based and awesome!🐸💎"],
   });
 };    
 
@@ -202,16 +205,12 @@ export default function Home() {
           
           {/*  Flex */}
           <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-            <p style={{ 
-              fontSize: '14px', 
-              color: 'rgba(255, 255, 255, 0.6)', 
-              marginBottom: '4px' 
-              }}>
-              {totalCheckIns !== undefined 
-              ? `${totalCheckIns.toString()} based people checked in` 
-              : 'Loading stats...'}
+            <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', marginBottom: '4px' }}>
+            {totalCheckIns !== undefined 
+            ? `${totalCheckIns.toString()} based people checked in` 
+            : 'Loading stats...'}
             </p>
-            
+
             <button 
               type="button" 
               onClick={spawnHearts} 
