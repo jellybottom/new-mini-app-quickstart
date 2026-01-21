@@ -6,7 +6,6 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@coinbase/onchainkit/styles.css";
 
-// 1. set Wagmi
 const wagmiConfig = createConfig({
   chains: [base],
   transports: {
@@ -15,7 +14,6 @@ const wagmiConfig = createConfig({
 });
 
 export function RootProvider({ children }: { children: ReactNode }) {
-  // 2.  QueryClient 
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -24,14 +22,14 @@ export function RootProvider({ children }: { children: ReactNode }) {
         <OnchainKitProvider
           apiKey={process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY}
           chain={base}
+          // ВОТ ТУТ МЫ ВКЛЮЧАЕМ MINIKIT ЯВНО
           config={{
-            appearance: {
-              mode: "auto",
-            },
-            wallet: {
-              display: "modal",
-              preference: "all",
-            },
+            appearance: { mode: "auto" },
+            wallet: { display: "modal", preference: "all" },
+          }}
+          // Добавляем этот блок обязательно!
+          miniKit={{
+            enabled: true,
           }}
         >
           {children}
