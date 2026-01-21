@@ -58,6 +58,34 @@ export default function Home() {
     }
   };
 
+const sayThanksToJesse = async () => {
+  if (typeof window !== 'undefined' && window.ethereum) {
+    try {
+      
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      
+      const transactionParameters = {
+        to: '0x292d678b248D9915C7565FF17296C8242fF8ccF8', 
+        from: accounts[0],
+        value: '0x5AF3107A4000', 
+        
+        data: '0x14068308000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000075468616e6b732100000000000000000000000000000000000000000000000000',
+      };
+
+      await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [transactionParameters],
+      });
+
+      alert("Based! Message and tip sent to Jesse.");
+    } catch (error) {
+      console.error("User denied or error:", error);
+    }
+  } else {
+    alert("Please open this in Base Wallet!");
+  }
+};
+
   const spawnHearts = () => {
     const newHearts = Array.from({ length: 10 }).map((_, i) => ({
       id: Date.now() + i,
@@ -129,6 +157,21 @@ export default function Home() {
           <div className={styles.form}>
             <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
               FEEL THE VIBE
+            </button>
+
+  
+            <button 
+            type="button" 
+            onClick={sayThanksToJesse} 
+            className={styles.joinButton} 
+            style={{ 
+            width: '100%', 
+            cursor: 'pointer', 
+            backgroundColor: '#0052ff', // Фирменный синий цвет Base
+            marginTop: '10px'
+            }}
+            >
+            SAY THANKS TO JESSE 🔵
             </button>
           </div>
         </div>
