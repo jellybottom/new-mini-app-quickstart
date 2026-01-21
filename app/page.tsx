@@ -153,8 +153,8 @@ export default function Home() {
                   schemaId="0xf8b05c79f090979bf4a80270aba232dff11a10d9ca55c4f88de9531794c6ca19"
                   className="bg-transparent"
                 >
-                  <Avatar style={{ width: '28px', height: '28px' }} />
-                  <Name style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
+                  <Avatar address={userAddress} style={{ width: '28px', height: '28px' }} />
+                  <Name address={userAddress} style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
                   <Badge />
                 </Identity>
               </div>
