@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
 
-// Сообщаем TypeScript, что у window может быть объект ethereum
+
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
