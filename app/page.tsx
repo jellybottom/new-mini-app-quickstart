@@ -24,7 +24,9 @@ interface MiniKitReturn {
   context: ExtendedContext;
   isFrameReady: boolean;
   setFrameReady: (ready: boolean) => void;
-  
+  sendTransaction: (payload: {
+    calls: { to: `0x${string}`; value: string; data: string }[];
+  }) => Promise<any>;
 }
 
 export default function Home() {
