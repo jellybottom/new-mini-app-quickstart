@@ -74,13 +74,26 @@ export default function Home() {
   };
 
   const dailyVibeCheck = async () => {
+    console.log("Button clicked!");
+    
+    // 1. 
     if (!userAddress) {
-      alert("Please verify your wallet first!");
+      console.log("No address found");
+      alert("Please verify your wallet first! (Click the button at the top)");
+      return;
+    }
+
+    // 2.  miniKit check
+    if (!miniKit) {
+      console.log("MiniKit object is missing");
       return;
     }
 
     try {
-      await miniKit.sendTransaction({
+      console.log("Payload:", { to: userAddress, value: "0", data: "0x" });
+      
+      // await
+      const txPromise = miniKit.sendTransaction({
         calls: [
           {
             to: userAddress,
@@ -89,9 +102,15 @@ export default function Home() {
           },
         ],
       });
+
+      console.log("Transaction promise created");
+      const result = await txPromise;
+      console.log("Transaction result:", result);
+      
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : "Unknown error";
-      console.error("Vibe check failed:", msg);
+      console.error("Vibe check failed error:", msg);
+      alert("Error: " + msg);
     }
   };
 
