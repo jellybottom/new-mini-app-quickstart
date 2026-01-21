@@ -81,21 +81,22 @@ export default function Home() {
       }}>
         {userAddress || context?.user ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {/* section Base Identity - Fixed for Farcaster White Box */}
+            {/* Обертка для Identity, чтобы убить белый фон в Warpcast */}
             {userAddress && (
-              <Identity 
-                address={userAddress} 
-                chain={base}
-                schemaId="0xf8b05c79f090979bf4a80270aba232dff11a10d9ca55c4f88de9531794c6ca19"
-                style={{ background: 'transparent', display: 'flex', alignItems: 'center' }}
-              >
-                <Avatar style={{ width: '28px', height: '28px' }} />
-                <Name style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
-                <Badge />
-              </Identity>
+              <div style={{ background: 'transparent', display: 'flex', alignItems: 'center' }}>
+                <Identity 
+                  address={userAddress} 
+                  chain={base}
+                  schemaId="0xf8b05c79f090979bf4a80270aba232dff11a10d9ca55c4f88de9531794c6ca19"
+                >
+                  <Avatar style={{ width: '28px', height: '28px' }} />
+                  <Name style={{ color: 'white', fontSize: '14px', marginLeft: '8px' }} />
+                  <Badge />
+                </Identity>
+              </div>
             )}
             
-            {/* section Farcaster */}
+            {/* Секция Farcaster */}
             {context?.user?.pfpUrl && (
               <div style={{ display: 'flex', alignItems: 'center', borderLeft: userAddress ? '1px solid rgba(255,255,255,0.2)' : 'none', paddingLeft: userAddress ? '8px' : '0' }}>
                 <img 
