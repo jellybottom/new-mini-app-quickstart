@@ -74,16 +74,13 @@ export default function Home() {
   };
 
   const dailyVibeCheck = async () => {
-    console.log("Button clicked!");
-    
     if (!userAddress) {
       alert("Please verify your wallet first!");
       return;
     }
 
     try {
-      console.log("Starting transaction...");
-      const result = await miniKit.sendTransaction({
+      await miniKit.sendTransaction({
         calls: [
           {
             to: userAddress,
@@ -92,12 +89,9 @@ export default function Home() {
           },
         ],
       });
-      console.log("Success:", result);
     } catch (error: unknown) {
-      // no any
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error("Full error:", errorMessage);
-      alert("Error: " + errorMessage);
+      const msg = error instanceof Error ? error.message : "Unknown error";
+      console.error("Vibe check failed:", msg);
     }
   };
 
