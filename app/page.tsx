@@ -13,6 +13,7 @@ interface ExtendedUser {
   fid?: number;
   address?: `0x${string}` | undefined;
   displayName?: string | undefined;
+  pfpUrl?: string | undefined; 
 }
 
 interface ExtendedContext {
