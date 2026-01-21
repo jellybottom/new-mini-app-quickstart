@@ -71,6 +71,26 @@ export default function Home() {
     }, 3000);
   };
 
+  const dailyVibeCheck = async () => {
+  if (!userAddress) {
+    alert("Please verify your wallet first!");
+    return;
+  }
+  try {
+    await miniKit.sendTransaction({
+      calls: [
+        {
+          to: userAddress,
+          value: "0",
+          data: "0x",
+        },
+      ],
+    });
+  } catch (error) {
+    console.error("Vibe check failed:", error);
+  }
+  };
+
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
       <div style={{ 
@@ -154,9 +174,39 @@ export default function Home() {
           <p className={styles.subtitle}>
             Hey {displayName}, You look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
           </p>
-          <div className={styles.form}>
-            <button type="button" onClick={spawnHearts} className={styles.joinButton} style={{ width: '100%', cursor: 'pointer' }}>
+          
+          {/*  Flex */}
+          <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+            <button 
+              type="button" 
+              onClick={spawnHearts} 
+              className={styles.joinButton} 
+              style={{ width: '100%', cursor: 'pointer' }}
+            >
               FEEL THE VIBE
+            </button>
+
+            <button 
+              type="button" 
+              onClick={dailyVibeCheck} 
+              style={{ 
+                width: 'auto',
+                minWidth: '160px',
+                cursor: 'pointer',
+                background: '#0052ff',
+                border: 'none',
+                color: 'white',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: '600',
+                transition: 'opacity 0.2s',
+                marginTop: '10px' 
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.opacity = '0.8')}
+              onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
+            >
+              ON-CHAIN CHECK-IN 🔵
             </button>
           </div>
         </div>
