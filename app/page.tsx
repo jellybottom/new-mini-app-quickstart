@@ -74,44 +74,6 @@ export default function Home() {
     }, 3000);
   };
 
-  const dailyVibeCheck = async () => {
-    console.log("Button clicked!");
-    
-    
-    if (!userAddress) {
-      alert("Address not found. Trying to authenticate...");
-      try {
-        await authenticate();
-        return; 
-      } catch {
-        alert("Authentication failed. Please use 'Verify Wallet' button at the top.");
-        return;
-      }
-    }
-
-    try {
-      // alert
-      console.log("Starting tx for:", userAddress);
-      
-      const result = await miniKit.sendTransactions({
-        calls: [
-          {
-            to: userAddress,
-            value: "0",
-            data: "0x",
-          },
-        ],
-      });
-      
-      if (result) {
-        alert("Transaction sent! Check your wallet.");
-      }
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error("Vibe check error:", errorMessage);
-      alert("Transaction error: " + errorMessage);
-    }
-  };
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
@@ -208,28 +170,6 @@ export default function Home() {
               FEEL THE VIBE
             </button>
 
-            <button 
-              type="button" 
-              onClick={dailyVibeCheck} 
-              style={{ 
-                width: 'auto',
-                minWidth: '160px',
-                cursor: 'pointer',
-                background: '#0052ff',
-                border: 'none',
-                color: 'white',
-                padding: '8px 16px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                fontWeight: '600',
-                transition: 'opacity 0.2s',
-                marginTop: '10px' 
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.opacity = '0.8')}
-              onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
-            >
-              ON-CHAIN CHECK-IN 🔵
-            </button>
           </div>
         </div>
       </div>
