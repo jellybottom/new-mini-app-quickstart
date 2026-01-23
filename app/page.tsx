@@ -65,7 +65,7 @@ export default function Home() {
   useEffect(() => {
   const init = async () => {
     try {
-      // Сообщаем оболочке (Warpcast/Coinbase), что Mini App готов
+      // (Warpcast/Coinbase), Mini App ready
       await sdk.actions.ready(); 
       console.log("Mini App SDK: Ready signal sent");
     } catch (e) {
