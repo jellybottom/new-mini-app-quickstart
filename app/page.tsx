@@ -149,7 +149,7 @@ export default function Home() {
     capabilities: {
       paymasterService: {
         // Alchemy
-        url: `https://api.g.alchemy.com/stg/v1/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/paymaster`,
+        url: `https://base-mainnet.g.alchemy.com/v2/qPL6UtzE9eHLxy9g4alvIr`,
       },
     },
   });
