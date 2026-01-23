@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import { useMiniKit } from "@coinbase/onchainkit/minikit";
 import { useAuthenticate } from "@coinbase/onchainkit/minikit";
-import { useAccount, useWriteContract, useReadContract } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
+import { useSendCalls } from 'wagmi/experimental';
 import { minikitConfig } from "../minikit.config";
 import styles from "./page.module.css";
 import { Identity, Avatar, Name, Badge } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+import { encodeFunctionData } from 'viem';
 import sdk from '@farcaster/frame-sdk';
 
 
@@ -57,7 +59,7 @@ export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user: _authUser, authenticate } = useAuthenticate() as any;
   const { address: userAddress } = useAccount(); // address optional, Identity handles undefined
-  const { writeContract, isPending } = useWriteContract();
+  const { sendCalls, isPending } = useSendCalls();
 
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
@@ -65,7 +67,7 @@ export default function Home() {
   useEffect(() => {
   const init = async () => {
     try {
-      // Сообщаем оболочке (Warpcast/Coinbase), что Mini App готов
+      // mini app ready
       await sdk.actions.ready(); 
       console.log("Mini App SDK: Ready signal sent");
     } catch (e) {
@@ -123,15 +125,35 @@ export default function Home() {
     return;
   }
 
-  
-
-  writeContract({
-    address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
+  // (calldata)
+  const callData = encodeFunctionData({
     abi: checkInAbi,
     functionName: 'checkIn',
     args: ["Checked in cause I'm based and awesome!🐸💎"],
   });
-};    
+
+  sendCalls({
+    calls: [
+      {
+        to: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6',
+        data: callData,
+        // window
+        metadata: {
+          title: "The Awesome And Based App",
+          description: "Checking in to the Based Hall of Fame 🐸",
+          faviconUrl: "https://the-awesome-and-based.vercel.app/basedpepe.jpg",
+          hostname: "the-awesome-and-based.vercel.app",
+        },
+      },
+    ],
+    capabilities: {
+      paymasterService: {
+        // Alchemy
+        url: `https://api.g.alchemy.com/stg/v1/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}/paymaster`,
+      },
+    },
+  });
+};
 
 
   return (
