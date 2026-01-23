@@ -137,7 +137,7 @@ export default function Home() {
       {
         to: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6',
         data: callData,
-        // window
+        // @ts-ignore
         metadata: {
           title: "The Awesome And Based App",
           description: "Checking in to the Based Hall of Fame 🐸",
