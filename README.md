@@ -11,6 +11,6 @@ Just catching some **Based Vibes** while exploring the ecosystem.
 *Built with passion, based on Base.*
 
 ### 🚀 Quick Links
-- **Live Demo:** [the-awesome-and-based.vercel.app](https://the-awesome-and-based.vercel.app)
-- **Open in Warpcast:** [Launch Mini App](https://farcaster.xyz/miniapps/pI_AOMKHHa_n/the-awesome-and-based)
+- **Open in Base App:** [The Awesome and Based](https://base.app/app/the-awesome-and-based.vercel.app/)
+- **Open in Farcaster:** [Mini App](https://farcaster.xyz/miniapps/pI_AOMKHHa_n/the-awesome-and-based)
 - **Network:** Base Mainnet 🔵
