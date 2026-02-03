@@ -270,7 +270,7 @@ export default function Home() {
           </p>
           
           {/*  Flex */}
-          <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+          <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '-15px' }}>
             <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '2px', fontWeight: '700', textShadow: '0px 0px 8px rgba(0, 82, 255, 0.4)' }}>
             {totalCheckIns !== undefined 
             ? `${totalCheckIns.toString()} based people checked in` 
@@ -322,7 +322,7 @@ export default function Home() {
               boxShadow: alreadyMinted ? 'none' : '0 4px 12px rgba(0, 82, 255, 0.3)'
               }}
               >
-              {alreadyMinted ? 'YOU OWN 1/1 MEMORY 🐸' : isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🎁'}
+              {alreadyMinted ? 'YOU OWN 1/1 BASED MEMORY 🐸' : isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🐸🎁'}
             </button>
 
             {mintSuccess && <p style={{ color: '#00C2FF', fontSize: '12px', fontWeight: 'bold', marginTop: '4px' }}>MINT SUCCESSFUL!🔥</p>}
