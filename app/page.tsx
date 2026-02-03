@@ -10,6 +10,17 @@ import { base } from 'viem/chains';
 import sdk from '@farcaster/frame-sdk';
 
 
+const nftAbi = [
+  {
+    "inputs": [],
+    "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+] as const;
+
+
 const checkInAbi = [
   {
     "inputs": [{"name": "message", "type": "string"}],
@@ -133,6 +144,20 @@ export default function Home() {
   });
 };    
 
+  const handleMint = () => {
+  if (!userAddress) {
+    alert("Connect wallet first!");
+    return;
+  }
+
+  writeContract({
+    address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
+    abi: nftAbi,
+    functionName: 'mint',
+  });
+};
+
+
 
   return (
     <div className={styles.container} style={{ overflow: 'hidden', position: 'relative' }}>
@@ -252,6 +277,26 @@ export default function Home() {
               }}
               >
               {isPending ? 'CHECKING IN...' : 'ON-CHAIN CHECK-IN 🚀'}
+            </button>
+
+            <button 
+              onClick={handleMint}
+              disabled={isPending}
+              style={{ 
+              width: '100%', 
+              background: 'linear-gradient(45deg, #0052FF, #00C2FF)', 
+              border: 'none', 
+              color: 'white', 
+              borderRadius: '12px', 
+              padding: '12px', 
+              fontSize: '14px', 
+              cursor: isPending ? 'not-allowed' : 'pointer',
+              fontWeight: 'bold',
+              marginTop: '8px',
+              boxShadow: '0 4px 14px 0 rgba(0, 82, 255, 0.3)'
+              }}
+              >
+              {isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🐸🎁'}
             </button>
 
           </div>
