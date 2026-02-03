@@ -17,6 +17,13 @@ const nftAbi = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "address", "name": "", "type": "address"}],
+    "name": "hasMinted",
+    "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
+    "stateMutability": "view",
+    "type": "function"
   }
 ] as const;
 
@@ -73,6 +80,8 @@ export default function Home() {
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
+  const [mintSuccess, setMintSuccess] = useState(false);
+
   useEffect(() => {
   const init = async () => {
     try {
@@ -105,6 +114,8 @@ export default function Home() {
       console.error("Auth failed", error);
     }
   };
+
+  
 
   const spawnHearts = () => {
     const newHearts = Array.from({ length: 10 }).map((_, i) => ({
@@ -144,11 +155,32 @@ export default function Home() {
   });
 };    
 
-  const handleMint = () => {
+  const { data: alreadyMinted } = useReadContract({
+  address: '0x1e2a9b0d96A42238db4624212e24E71F90688459',
+  abi: nftAbi,
+  functionName: 'hasMinted',
+  args: userAddress ? [userAddress] : undefined,
+  query: { enabled: !!userAddress, refetchInterval: 5000 }
+});
+
+  const handleMint = async () => {
   if (!userAddress) {
     alert("Connect wallet first!");
     return;
   }
+  try {
+    writeContract({
+      address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
+      abi: nftAbi,
+      functionName: 'mint',
+    });
+    // Показываем уведомление (в идеале нужно ждать хеш, но для простоты включим сейчас)
+    setMintSuccess(true);
+    setTimeout(() => setMintSuccess(false), 5000);
+  } catch (e) {
+    console.error(e);
+  }
+};
 
   writeContract({
     address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
@@ -240,13 +272,13 @@ export default function Home() {
           </div>
 
           <h1 className={styles.title}>{minikitConfig.miniapp.name.toUpperCase()}</h1>
-          <p className={styles.subtitle}>
+          <p className={styles.subtitle} style={{ fontSize: '13px', marginBottom: '8px', lineHeight: '1.4' }}>
             Hey {displayName}, You look based, and if no one has told you this yet, you are wonderful just the way you are ❤️ <br /> I wish you all the best!
           </p>
           
           {/*  Flex */}
           <div className={styles.form} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-            <p style={{ fontSize: '15px', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4px', fontWeight: '700', textShadow: '0px 0px 8px rgba(0, 82, 255, 0.4)' }}>
+            <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.9)', marginBottom: '2px', fontWeight: '700', textShadow: '0px 0px 8px rgba(0, 82, 255, 0.4)' }}>
             {totalCheckIns !== undefined 
             ? `${totalCheckIns.toString()} based people checked in` 
             : 'Loading stats...'}
@@ -281,22 +313,23 @@ export default function Home() {
 
             <button 
               onClick={handleMint}
-              disabled={isPending}
+              disabled={isPending || alreadyMinted}
               style={{ 
               width: '100%', 
-              background: 'linear-gradient(45deg, #0052FF, #00C2FF)', 
-              border: 'none', 
-              color: 'white', 
+              background: alreadyMinted 
+                ? 'rgba(255, 255, 255, 0.1)' 
+                : 'linear-gradient(45deg, #0052FF, #00C2FF)', 
+              border: alreadyMinted ? '1px solid rgba(255, 255, 255, 0.2)' : 'none', 
+              color: alreadyMinted ? 'rgba(255, 255, 255, 0.5)' : 'white', 
               borderRadius: '12px', 
               padding: '12px', 
               fontSize: '14px', 
-              cursor: isPending ? 'not-allowed' : 'pointer',
+              cursor: (isPending || alreadyMinted) ? 'not-allowed' : 'pointer',
               fontWeight: 'bold',
-              marginTop: '8px',
-              boxShadow: '0 4px 14px 0 rgba(0, 82, 255, 0.3)'
+              boxShadow: alreadyMinted ? 'none' : '0 4px 12px rgba(0, 82, 255, 0.3)'
               }}
               >
-              {isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🐸🎁'}
+              {alreadyMinted ? 'YOU OWN 1/1 MEMORY 🐸' : isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🎁'}
             </button>
 
           </div>
