@@ -325,6 +325,7 @@ export default function Home() {
               {alreadyMinted ? 'YOU OWN 1/1 MEMORY 🐸' : isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🎁'}
             </button>
 
+            {mintSuccess && <p style={{ color: '#00C2FF', fontSize: '12px', fontWeight: 'bold', marginTop: '4px' }}>MINT SUCCESSFUL!🔥</p>}
           </div>
         </div>
       </div>
