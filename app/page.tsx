@@ -138,23 +138,6 @@ export default function Home() {
   }
 });
 
-
-   const handleCheckIn = () => {
-  if (!userAddress) {
-    alert("Connect wallet first!");
-    return;
-  }
-
-  
-
-  writeContract({
-    address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
-    abi: checkInAbi,
-    functionName: 'checkIn',
-    args: ["Checked in cause I'm based and awesome!🐸💎"],
-  });
-};    
-
   const { data: alreadyMinted } = useReadContract({
   address: '0x1e2a9b0d96A42238db4624212e24E71F90688459',
   abi: nftAbi,
@@ -163,31 +146,41 @@ export default function Home() {
   query: { enabled: !!userAddress, refetchInterval: 5000 }
 });
 
-  const handleMint = async () => {
+   const handleCheckIn = () => {
   if (!userAddress) {
     alert("Connect wallet first!");
     return;
   }
-  try {
-    writeContract({
-      address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
-      abi: nftAbi,
-      functionName: 'mint',
-    });
-    // Показываем уведомление (в идеале нужно ждать хеш, но для простоты включим сейчас)
-    setMintSuccess(true);
-    setTimeout(() => setMintSuccess(false), 5000);
-  } catch (e) {
-    console.error(e);
-  }
-};
 
+  
   writeContract({
-    address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
-    abi: nftAbi,
-    functionName: 'mint',
+    address: '0x535e5aaB048e7f9EE75A679aFbACD0156AdCABb6', 
+    abi: checkInAbi,
+    functionName: 'checkIn',
+    args: ["Checked in cause I'm based and awesome!🐸💎"],
   });
-};
+};    
+
+
+
+  const handleMint = async () => {
+    if (!userAddress) {
+      alert("Connect wallet first!");
+      return;
+    }
+    try {
+      writeContract({
+        address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
+        abi: nftAbi,
+        functionName: 'mint',
+      });
+      setMintSuccess(true);
+      setTimeout(() => setMintSuccess(false), 5000);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
 
 
 
