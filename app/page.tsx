@@ -80,7 +80,6 @@ export default function Home() {
   const displayName = context?.user?.displayName || "based anon";
   const [hearts, setHearts] = useState<{ id: number; left: number }[]>([]);
 
-  const [mintSuccess, setMintSuccess] = useState(false);
 
   useEffect(() => {
   const init = async () => {
@@ -163,22 +162,16 @@ export default function Home() {
 
 
 
-  const handleMint = async () => {
+  const handleMint = () => {
     if (!userAddress) {
       alert("Connect wallet first!");
       return;
     }
-    try {
-      writeContract({
-        address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
-        abi: nftAbi,
-        functionName: 'mint',
-      });
-      setMintSuccess(true);
-      setTimeout(() => setMintSuccess(false), 5000);
-    } catch (e) {
-      console.error(e);
-    }
+    writeContract({
+      address: '0x1e2a9b0d96A42238db4624212e24E71F90688459', 
+      abi: nftAbi,
+      functionName: 'mint',
+    });
   };
 
 
@@ -325,7 +318,6 @@ export default function Home() {
               {alreadyMinted ? 'YOU OWN 1/1 BASED MEMORY 🐸' : isPending ? 'MINTING...' : 'CLAIM YOUR 1/1 BASED MEMORY 🐸🎁'}
             </button>
 
-            {mintSuccess && <p style={{ color: '#00C2FF', fontSize: '12px', fontWeight: 'bold', marginTop: '4px' }}>MINT SUCCESSFUL!🔥</p>}
           </div>
         </div>
       </div>
